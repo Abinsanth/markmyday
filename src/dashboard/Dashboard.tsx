@@ -11,6 +11,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+import Attendance from "@/features/attendance/Attendance"
 
 export default function Dashboard() {
   return (
@@ -35,9 +36,10 @@ export default function Dashboard() {
             </Breadcrumb>
           </div>
         </header>
-        <div className="flex flex-1 flex-col gap-4 p-4">
-          <div className="mx-auto h-24 w-full max-w-3xl rounded-xl bg-muted/50" />
-          <div className="mx-auto h-screen w-full max-w-3xl rounded-xl bg-muted/50" />
+        <div className="p-4">
+          <div className="mx-auto h-screen w-full rounded-xl bg-muted/50">
+            <Attendance />
+          </div>
         </div>
       </SidebarInset>
     </SidebarProvider>

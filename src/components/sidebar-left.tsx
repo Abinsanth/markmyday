@@ -2,11 +2,7 @@
 
 import * as React from "react"
 
-import { NavFavorites } from "@/components/nav-favorites"
 import { NavMain } from "@/components/nav-main"
-import { NavSecondary } from "@/components/nav-secondary"
-import { NavWorkspaces } from "@/components/nav-workspaces"
-import { TeamSwitcher } from "@/components/team-switcher"
 import {
   Sidebar,
   SidebarContent,
@@ -14,19 +10,7 @@ import {
   SidebarRail,
   SidebarSeparator,
 } from "@/components/ui/sidebar"
-import {
-  TerminalIcon,
-  AudioLinesIcon,
-  SearchIcon,
-  SparklesIcon,
-  HomeIcon,
-  InboxIcon,
-  CalendarIcon,
-  Settings2Icon,
-  BlocksIcon,
-  Trash2Icon,
-  MessageCircleQuestionIcon,
-} from "lucide-react"
+import { SearchIcon, Settings2Icon, BlocksIcon } from "lucide-react"
 import { NavUser } from "./nav-user"
 import { DatePicker } from "./date-picker"
 
@@ -64,7 +48,6 @@ export function SidebarLeft({
       <SidebarHeader>
         <NavUser user={data.user} />
         <SidebarSeparator className="mx-0" />
-        {/* <TeamSwitcher teams={data.teams} /> */}
       </SidebarHeader>
       <SidebarContent>
         <DatePicker />
