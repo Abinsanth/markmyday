@@ -1,5 +1,4 @@
 import { SidebarLeft } from "@/components/sidebar-left"
-import { SidebarRight } from "@/components/sidebar-right"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -29,7 +28,7 @@ export default function Dashboard() {
               <BreadcrumbList>
                 <BreadcrumbItem>
                   <BreadcrumbPage className="line-clamp-1">
-                    Project Management & Task Tracking
+                    Attendance Management
                   </BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
@@ -41,7 +40,6 @@ export default function Dashboard() {
           <div className="mx-auto h-screen w-full max-w-3xl rounded-xl bg-muted/50" />
         </div>
       </SidebarInset>
-      <SidebarRight />
     </SidebarProvider>
   )
 }
