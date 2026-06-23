@@ -14,7 +14,6 @@ import {
   SidebarRail,
   SidebarSeparator,
 } from "@/components/ui/sidebar"
-import { PlusIcon } from "lucide-react"
 
 // This is sample data.
 const data = {
@@ -54,19 +53,18 @@ export function SidebarRight({
       <SidebarContent>
         <DatePicker />
         <SidebarSeparator className="mx-0" />
-        <Calendars calendars={data.calendars} />
+        {/* <Calendars calendars={data.calendars} /> */}
       </SidebarContent>
-      <SidebarFooter>
+      {/* <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton>
-              <PlusIcon
-              />
+              <PlusIcon />
               <span>New Calendar</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
-      </SidebarFooter>
+      </SidebarFooter> */}
     </Sidebar>
   )
 }

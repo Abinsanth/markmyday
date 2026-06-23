@@ -4,6 +4,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarSeparator,
 } from "@/components/ui/sidebar"
 
 export function NavMain({
@@ -26,6 +27,7 @@ export function NavMain({
               <span>{item.title}</span>
             </a>
           </SidebarMenuButton>
+          <SidebarSeparator className="mx-0" />
         </SidebarMenuItem>
       ))}
     </SidebarMenu>
