@@ -1,12 +1,5 @@
-"use client"
-
 import * as React from "react"
-
-import { NavFavorites } from "@/components/nav-favorites"
 import { NavMain } from "@/components/nav-main"
-import { NavSecondary } from "@/components/nav-secondary"
-import { NavWorkspaces } from "@/components/nav-workspaces"
-import { TeamSwitcher } from "@/components/team-switcher"
 import {
   Sidebar,
   SidebarContent,
@@ -15,61 +8,67 @@ import {
   SidebarSeparator,
 } from "@/components/ui/sidebar"
 import {
-  TerminalIcon,
-  AudioLinesIcon,
-  SearchIcon,
-  SparklesIcon,
-  HomeIcon,
-  InboxIcon,
-  CalendarIcon,
-  Settings2Icon,
-  BlocksIcon,
-  Trash2Icon,
-  MessageCircleQuestionIcon,
+  ClipboardListIcon,
+  ListIcon,
+  FolderPenIcon,
+  UserRoundIcon,
 } from "lucide-react"
 import { NavUser } from "./nav-user"
 import { DatePicker } from "./date-picker"
 
-// This is sample data.
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  navMain: [
-    {
-      title: "View List",
-      url: "#",
-      icon: <SearchIcon />,
-    },
-    {
-      title: "Manage List",
-      url: "#",
-      icon: <BlocksIcon />,
-    },
-    {
-      title: "Manage Profile",
-      url: "#",
-      icon: <Settings2Icon />,
-    },
-  ],
+type Props = React.ComponentProps<typeof Sidebar> & {
+  onNavigate: (
+    view: "attendance" | "view-list" | "manage-list" | "manage-profile"
+  ) => void
+  activeView: string
+  selectedDate: Date | undefined
+  onDateChange: (date: Date | undefined) => void
 }
 
 export function SidebarLeft({
+  onNavigate,
+  selectedDate,
+  onDateChange,
+  activeView,
   ...props
-}: React.ComponentProps<typeof Sidebar>) {
+}: Props) {
+  const navMain = [
+    {
+      title: "Take Attendance",
+      icon: <ClipboardListIcon />,
+      isActive: activeView === "attendance",
+      onClick: () => onNavigate("attendance"),
+    },
+    {
+      title: "View Lists",
+      icon: <ListIcon />,
+      isActive: activeView === "view-list",
+      onClick: () => onNavigate("view-list"),
+    },
+    {
+      title: "Manage Lists",
+      icon: <FolderPenIcon />,
+      isActive: activeView === "manage-list",
+      onClick: () => onNavigate("manage-list"),
+    },
+    {
+      title: "Profile",
+      icon: <UserRoundIcon />,
+      isActive: activeView === "manage-profile",
+      onClick: () => onNavigate("manage-profile"),
+    },
+  ]
+
   return (
     <Sidebar className="border-r-0" {...props}>
       <SidebarHeader>
-        <NavUser user={data.user} />
+        <NavUser />
         <SidebarSeparator className="mx-0" />
-        {/* <TeamSwitcher teams={data.teams} /> */}
       </SidebarHeader>
       <SidebarContent>
-        <DatePicker />
+        <DatePicker selected={selectedDate} onDateChange={onDateChange} />
         <SidebarSeparator className="mx-0" />
-        <NavMain items={data.navMain} />
+        <NavMain items={navMain} />
       </SidebarContent>
       <SidebarRail />
     </Sidebar>

@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui/button"
-import { LoginForm } from "./components/login-form"
 import Dashboard from "./dashboard/Dashboard"
 
 export function App() {
