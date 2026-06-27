@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Link, useNavigate } from "react-router-dom"
 import { usePasswordToggle } from "@/hooks/usePasswordToggle"
+import { toast } from "sonner"
 
 export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   const [name, setName] = useState("")
@@ -55,7 +56,8 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
     if (error) {
       setError(error.message)
     } else {
-      navigate("/")
+      toast.success("Account created! Please log in.")
+      navigate("/login")
     }
 
     setLoading(false)

@@ -20,6 +20,7 @@ type Props = React.ComponentProps<typeof Sidebar> & {
   onNavigate: (
     view: "attendance" | "view-list" | "manage-list" | "manage-profile"
   ) => void
+  activeView: string
   selectedDate: Date | undefined
   onDateChange: (date: Date | undefined) => void
 }
@@ -28,27 +29,32 @@ export function SidebarLeft({
   onNavigate,
   selectedDate,
   onDateChange,
+  activeView,
   ...props
 }: Props) {
   const navMain = [
     {
       title: "Take Attendance",
       icon: <ClipboardListIcon />,
+      isActive: activeView === "attendance",
       onClick: () => onNavigate("attendance"),
     },
     {
       title: "View Lists",
       icon: <ListIcon />,
+      isActive: activeView === "view-list",
       onClick: () => onNavigate("view-list"),
     },
     {
       title: "Manage Lists",
       icon: <FolderPenIcon />,
+      isActive: activeView === "manage-list",
       onClick: () => onNavigate("manage-list"),
     },
     {
       title: "Profile",
       icon: <UserRoundIcon />,
+      isActive: activeView === "manage-profile",
       onClick: () => onNavigate("manage-profile"),
     },
   ]

@@ -16,37 +16,40 @@ import Attendance from "@/features/attendance/Attendance"
 import ViewList from "@/features/list/ViewList"
 import ManageList from "@/features/list/ManageList"
 import ManageProfile from "@/features/profile/ManageProfile"
+import { useLists } from "@/hooks/useLists"
+
 type View = "attendance" | "view-list" | "manage-list" | "manage-profile"
 
 export default function Dashboard() {
   const [activeView, setActiveView] = useState<View>("attendance")
-
+  const listsData = useLists()
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
 
   const renderContent = () => {
     switch (activeView) {
       case "view-list":
-        return <ViewList />
+        return <ViewList listsData={listsData} />
       case "manage-list":
-        return <ManageList />
+        return <ManageList listsData={listsData} />
       case "manage-profile":
         return <ManageProfile />
       default:
-        return <Attendance selectedDate={selectedDate} />
+        return <Attendance selectedDate={selectedDate} listsData={listsData} />
     }
   }
 
   const breadcrumbTitle = {
-    attendance: "Attendance Management",
-    "view-list": "View List",
-    "manage-list": "Manage List",
-    "manage-profile": "Manage Profile",
+    attendance: "Take Attendance",
+    "view-list": "View Lists",
+    "manage-list": "Manage Lists",
+    "manage-profile": "Profile",
   }[activeView]
 
   return (
     <SidebarProvider>
       <SidebarLeft
         onNavigate={setActiveView}
+        activeView={activeView}
         selectedDate={selectedDate}
         onDateChange={setSelectedDate}
       />

@@ -3,12 +3,17 @@ import { Button } from "@/components/ui/button"
 import { useLists, type ListItem } from "@/hooks/useLists"
 import ListCard from "./ListCard"
 import CreateListForm from "./CreateListForm"
+import { ArrowLeftIcon } from "lucide-react"
 
 type View = "list" | "create" | "edit"
 
-export default function ManageList() {
+type Props = {
+  listsData: ReturnType<typeof useLists>
+}
+
+export default function ManageList({ listsData }: Props) {
   const { lists, loading, error, createList, updateList, deleteList } =
-    useLists()
+    listsData
   const [view, setView] = useState<View>("list")
   const [editingList, setEditingList] = useState<ListItem | undefined>()
 
@@ -43,11 +48,20 @@ export default function ManageList() {
 
   if (view === "create" || view === "edit") {
     return (
-      <CreateListForm
-        onSubmit={handleSubmit}
-        onCancel={handleCancel}
-        editingList={editingList}
-      />
+      <div>
+        <button
+          onClick={handleCancel}
+          className="flex items-center gap-1 p-4 text-sm text-muted-foreground hover:text-foreground"
+        >
+          <ArrowLeftIcon className="h-4 w-4" />
+          Back to Lists
+        </button>
+        <CreateListForm
+          onSubmit={handleSubmit}
+          onCancel={handleCancel}
+          editingList={editingList}
+        />
+      </div>
     )
   }
 

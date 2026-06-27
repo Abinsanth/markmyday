@@ -9,11 +9,12 @@ import {
 import { useLists } from "@/hooks/useLists"
 
 type Props = {
+  listsData: ReturnType<typeof useLists>
   onSelect: (rolls: string[], listName: string) => void
 }
 
-export default function List({ onSelect }: Props) {
-  const { lists, loading } = useLists()
+export default function List({ listsData, onSelect }: Props) {
+  const { lists, loading } = listsData
 
   if (loading) return <p>Loading lists...</p>
 

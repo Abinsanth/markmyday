@@ -1,7 +1,11 @@
 import { useLists } from "@/hooks/useLists"
 
-export default function ViewList() {
-  const { lists, loading, error } = useLists()
+type Props = {
+  listsData: ReturnType<typeof useLists>
+}
+
+export default function ViewList({ listsData }: Props) {
+  const { lists, loading, error } = listsData
 
   if (loading) return <p className="p-4">Loading...</p>
   if (error) return <p className="p-4 text-red-500">{error}</p>

@@ -18,6 +18,8 @@ import {
 import { Input } from "@/components/ui/input"
 import { Link, useNavigate } from "react-router-dom"
 import { usePasswordToggle } from "@/hooks/usePasswordToggle"
+import { toast } from "sonner"
+
 export function LoginForm({
   className,
   ...props
@@ -42,6 +44,7 @@ export function LoginForm({
     if (error) {
       setError(error.message)
     } else {
+      toast.success("Welcome back!")
       navigate("/")
     }
 

@@ -1,11 +1,13 @@
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
+import { ArrowLeftIcon } from "lucide-react"
 
 type Props = {
   rolls: string[]
   presentRolls: Set<string>
   title?: string
-  selectedDate?: Date | undefined
+  selectedDate?: Date
+  onBack: () => void
 }
 
 export default function CopyAttendance({
@@ -13,6 +15,7 @@ export default function CopyAttendance({
   presentRolls,
   title,
   selectedDate,
+  onBack,
 }: Props) {
   const present = rolls.filter((r) => presentRolls.has(r))
   const absent = rolls.filter((r) => !presentRolls.has(r))
@@ -40,6 +43,13 @@ ${absent.join(", ")}`
 
   return (
     <div className="space-y-4 p-4">
+      <button
+        onClick={onBack}
+        className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
+      >
+        <ArrowLeftIcon className="h-4 w-4" />
+        Back to Attendance
+      </button>
       <div>
         <p className="text-sm text-muted-foreground">Batch</p>
         <p className="font-semibold">{title ?? "N/A"}</p>

@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button"
 import ConfirmDialog from "@/components/ConfirmDialog"
+import { CheckCircleIcon, XCircleIcon } from "lucide-react"
 
 type Props = {
   rolls: string[]
@@ -14,6 +15,10 @@ export default function AttendancePanel({
   setPresentRolls,
   onFinish,
 }: Props) {
+  const total = rolls.length
+  const presentCount = presentRolls.size
+  const absentCount = total - presentCount
+  const percentage = Math.round((presentCount / total) * 100)
   const toggleAttendance = (roll: string) => {
     setPresentRolls((prev) => {
       const updated = new Set(prev)
@@ -62,9 +67,29 @@ export default function AttendancePanel({
 
       {/* Actions - pushed apart */}
       <div className="flex justify-between">
-        <Button disabled={presentRolls.size === 0} onClick={onFinish}>
-          Finish
-        </Button>
+        <ConfirmDialog
+          trigger={<Button disabled={presentRolls.size === 0}>Finish</Button>}
+          title="Finish Attendance?"
+          description={
+            <div className="flex flex-col gap-2 text-sm">
+              <div className="flex items-center gap-2">
+                <CheckCircleIcon className="h-4 w-4 text-green-500" />
+                <span>Present: {presentCount}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <XCircleIcon className="h-4 w-4 text-red-500" />
+                <span>Absent: {absentCount}</span>
+              </div>
+              <div
+                className={`font-medium ${percentage < 50 ? "text-red-500" : "text-green-500"}`}
+              >
+                Attendance: {percentage}%
+              </div>
+            </div>
+          }
+          confirmLabel="Finish"
+          onConfirm={onFinish}
+        />
         <ConfirmDialog
           trigger={<Button variant="outline">Clear</Button>}
           title="Clear Attendance?"

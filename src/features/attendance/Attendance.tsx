@@ -5,12 +5,14 @@ import AttendancePanel from "./AttendancePanel"
 import CopyAttendance from "./CopyAttendance"
 import { useAuth } from "@/context/AuthContext"
 import { CalendarIcon } from "lucide-react"
+import { useLists } from "@/hooks/useLists"
 
 type Props = {
   selectedDate: Date | undefined
+  listsData: ReturnType<typeof useLists>
 }
 
-export default function Attendance({ selectedDate }: Props) {
+export default function Attendance({ selectedDate, listsData }: Props) {
   const [rolls, setRolls] = useState<string[]>([])
   const [listName, setListName] = useState("")
   const [started, setStarted] = useState(false)
@@ -33,6 +35,7 @@ export default function Attendance({ selectedDate }: Props) {
         presentRolls={presentRolls}
         title={listName}
         selectedDate={selectedDate}
+        onBack={() => setFinished(false)}
       />
     )
   }
@@ -100,6 +103,7 @@ export default function Attendance({ selectedDate }: Props) {
       <div className="space-y-2">
         <label className="text-sm font-medium">Select a List</label>
         <List
+          listsData={listsData}
           onSelect={(rolls, name) => {
             setRolls(rolls)
             setListName(name)

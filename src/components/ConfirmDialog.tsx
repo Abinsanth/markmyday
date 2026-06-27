@@ -13,7 +13,7 @@ import {
 type Props = {
   trigger: React.ReactNode
   title: string
-  description: string
+  description: React.ReactNode
   confirmLabel?: string
   cancelLabel?: string
   onConfirm: () => void
