@@ -21,6 +21,8 @@ type View = "attendance" | "view-list" | "manage-list" | "manage-profile"
 export default function Dashboard() {
   const [activeView, setActiveView] = useState<View>("attendance")
 
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
+
   const renderContent = () => {
     switch (activeView) {
       case "view-list":
@@ -30,7 +32,7 @@ export default function Dashboard() {
       case "manage-profile":
         return <ManageProfile />
       default:
-        return <Attendance />
+        return <Attendance selectedDate={selectedDate} />
     }
   }
 
@@ -43,7 +45,11 @@ export default function Dashboard() {
 
   return (
     <SidebarProvider>
-      <SidebarLeft onNavigate={setActiveView} />
+      <SidebarLeft
+        onNavigate={setActiveView}
+        selectedDate={selectedDate}
+        onDateChange={setSelectedDate}
+      />
       <SidebarInset>
         <header className="sticky top-0 flex h-14 shrink-0 items-center gap-2 bg-background">
           <div className="flex flex-1 items-center gap-2 px-3">

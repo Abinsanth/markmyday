@@ -4,7 +4,13 @@ import List from "../list/List"
 import AttendancePanel from "./AttendancePanel"
 import CopyAttendance from "./CopyAttendance"
 import { useAuth } from "@/context/AuthContext"
-export default function Attendance() {
+import { CalendarIcon } from "lucide-react"
+
+type Props = {
+  selectedDate: Date | undefined
+}
+
+export default function Attendance({ selectedDate }: Props) {
   const [rolls, setRolls] = useState<string[]>([])
   const [listName, setListName] = useState("")
   const [started, setStarted] = useState(false)
@@ -26,6 +32,7 @@ export default function Attendance() {
         rolls={rolls}
         presentRolls={presentRolls}
         title={listName}
+        selectedDate={selectedDate}
       />
     )
   }
@@ -49,6 +56,20 @@ export default function Attendance() {
         <p className="text-sm text-muted-foreground">
           Mark and copy attendance in just a few steps.
         </p>
+      </div>
+
+      {/* Date */}
+      <div className="flex items-center gap-2 rounded-lg border bg-card px-3 py-2 text-sm">
+        <CalendarIcon className="h-4 w-4 text-muted-foreground" />
+        <span className="text-muted-foreground">Attendance Date:</span>
+        <span className="font-medium">
+          {(selectedDate ?? new Date()).toLocaleDateString("en-US", {
+            weekday: "short",
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          })}
+        </span>
       </div>
 
       {/* Steps */}

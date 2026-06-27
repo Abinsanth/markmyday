@@ -30,7 +30,6 @@ export default function CreateListForm({
 
   // Manual mode
   const [manualRolls, setManualRolls] = useState("")
-
   const [preview, setPreview] = useState<string[]>([])
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
@@ -69,7 +68,13 @@ export default function CreateListForm({
         .split(",")
         .map((s) => s.trim())
         .filter(Boolean)
-      setPreview(rolls)
+
+      const allNumeric = rolls.every((r) => !isNaN(Number(r)))
+      const sorted = allNumeric
+        ? [...rolls].sort((a, b) => Number(a) - Number(b))
+        : [...rolls].sort()
+
+      setPreview(sorted)
     }
     setError("")
   }

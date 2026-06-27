@@ -5,12 +5,18 @@ type Props = {
   rolls: string[]
   presentRolls: Set<string>
   title?: string
+  selectedDate?: Date | undefined
 }
 
-export default function CopyAttendance({ rolls, presentRolls, title }: Props) {
+export default function CopyAttendance({
+  rolls,
+  presentRolls,
+  title,
+  selectedDate,
+}: Props) {
   const present = rolls.filter((r) => presentRolls.has(r))
   const absent = rolls.filter((r) => !presentRolls.has(r))
-  const date = new Date().toLocaleDateString()
+  const date = (selectedDate ?? new Date()).toLocaleDateString()
 
   const handleCopy = () => {
     const text = `Batch: ${title ?? "N/A"}
@@ -35,7 +41,7 @@ ${absent.join(", ")}`
   return (
     <div className="space-y-4 p-4">
       <div>
-        <p className="text-sm text-muted-foreground">Title</p>
+        <p className="text-sm text-muted-foreground">Batch</p>
         <p className="font-semibold">{title ?? "N/A"}</p>
       </div>
       <div>

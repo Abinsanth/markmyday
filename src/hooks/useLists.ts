@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { supabase } from "@/lib/supabase"
+import { toast } from "sonner"
 
 export type ListItem = {
   id: string
@@ -40,8 +41,12 @@ export function useLists() {
       .from("lists")
       .insert({ name, rolls, user_id: user.id })
 
-    if (!error) await fetchLists()
-    return error
+    if (error) {
+      toast.error(error.message)
+      return error
+    }
+    toast.success("List created successfully!")
+    await fetchLists()
   }
 
   const updateList = async (id: string, name: string, rolls: string[]) => {
@@ -50,15 +55,23 @@ export function useLists() {
       .update({ name, rolls })
       .eq("id", id)
 
-    if (!error) await fetchLists()
-    return error
+    if (error) {
+      toast.error(error.message)
+      return error
+    }
+    toast.success("List updated successfully!")
+    await fetchLists()
   }
 
   const deleteList = async (id: string) => {
     const { error } = await supabase.from("lists").delete().eq("id", id)
 
-    if (!error) await fetchLists()
-    return error
+    if (error) {
+      toast.error(error.message)
+      return error
+    }
+    toast.success("List deleted successfully!")
+    await fetchLists()
   }
 
   useEffect(() => {
