@@ -45,7 +45,7 @@ export function LoginForm({
       setError(error.message)
     } else {
       toast.success("Welcome back!")
-      navigate("/")
+      navigate("/dashboard/attendance")
     }
 
     setLoading(false)
@@ -84,13 +84,6 @@ export function LoginForm({
                     Forgot your password?
                   </a>
                 </div>
-                {/* <Input
-                  id="password"
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                /> */}
                 <div className="relative">
                   <Input
                     id="password"

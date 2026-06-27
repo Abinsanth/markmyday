@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useOutletContext } from "react-router-dom"
 import { Button } from "@/components/ui/button"
-import List from "../list/List"
+import List from "../lists/List"
 import AttendancePanel from "./AttendancePanel"
 import CopyAttendance from "./CopyAttendance"
 import { useAuth } from "@/context/AuthContext"

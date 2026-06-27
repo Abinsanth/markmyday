@@ -11,25 +11,29 @@ import {
 } from "@/components/ui/alert-dialog"
 
 type Props = {
-  trigger: React.ReactNode
+  trigger?: React.ReactNode
+  open?: boolean
   title: string
   description: React.ReactNode
   confirmLabel?: string
   cancelLabel?: string
   onConfirm: () => void
+  onCancel?: () => void
 }
 
 export default function ConfirmDialog({
   trigger,
+  open,
   title,
   description,
   confirmLabel = "Confirm",
   cancelLabel = "Cancel",
   onConfirm,
+  onCancel,
 }: Props) {
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>{trigger}</AlertDialogTrigger>
+    <AlertDialog open={open}>
+      {trigger && <AlertDialogTrigger asChild>{trigger}</AlertDialogTrigger>}
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>
@@ -38,7 +42,9 @@ export default function ConfirmDialog({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>{cancelLabel}</AlertDialogCancel>
+          <AlertDialogCancel onClick={onCancel}>
+            {cancelLabel}
+          </AlertDialogCancel>
           <AlertDialogAction onClick={onConfirm}>
             {confirmLabel}
           </AlertDialogAction>
