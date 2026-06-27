@@ -25,7 +25,7 @@ export default function List({ onSelect }: Props) {
         if (list) onSelect(list.rolls, list.name)
       }}
     >
-      <ComboboxInput placeholder="Select a list" className="w-50" />
+      <ComboboxInput placeholder="Select a list" />
       <ComboboxContent>
         <ComboboxEmpty>No lists found.</ComboboxEmpty>
         <ComboboxList>

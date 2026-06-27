@@ -10,17 +10,10 @@ import {
 import { SearchIcon, Settings2Icon, BlocksIcon, HomeIcon } from "lucide-react"
 import { NavUser } from "./nav-user"
 import { DatePicker } from "./date-picker"
-
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-}
-
 type Props = React.ComponentProps<typeof Sidebar> & {
-  onNavigate: (view: "attendance" | "view-list" | "manage-list") => void
+  onNavigate: (
+    view: "attendance" | "view-list" | "manage-list" | "manage-profile"
+  ) => void
 }
 
 export function SidebarLeft({ onNavigate, ...props }: Props) {
@@ -43,14 +36,14 @@ export function SidebarLeft({ onNavigate, ...props }: Props) {
     {
       title: "Manage Profile",
       icon: <Settings2Icon />,
-      onClick: () => onNavigate("manage-list"),
+      onClick: () => onNavigate("manage-profile"),
     },
   ]
 
   return (
     <Sidebar className="border-r-0" {...props}>
       <SidebarHeader>
-        <NavUser user={data.user} />
+        <NavUser />
         <SidebarSeparator className="mx-0" />
       </SidebarHeader>
       <SidebarContent>

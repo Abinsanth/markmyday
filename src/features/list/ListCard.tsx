@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button"
 import type { ListItem } from "@/hooks/useLists"
+import ConfirmDialog from "@/components/ConfirmDialog"
 type Props = {
   list: ListItem
   onEdit: (list: ListItem) => void
@@ -15,15 +16,17 @@ export default function ListCard({ list, onEdit, onDelete }: Props) {
           <Button variant="outline" size="sm" onClick={() => onEdit(list)}>
             Edit
           </Button>
-          <Button
-            variant="destructive"
-            size="sm"
-            onClick={() => {
-              if (confirm(`Delete "${list.name}"?`)) onDelete(list.id)
-            }}
-          >
-            Delete
-          </Button>
+          <ConfirmDialog
+            trigger={
+              <Button variant="destructive" size="sm">
+                Delete
+              </Button>
+            }
+            title="Delete List?"
+            description={`"${list.name}" will be permanently deleted.`}
+            confirmLabel="Delete"
+            onConfirm={() => onDelete(list.id)}
+          />
         </div>
       </div>
       <p className="text-sm text-muted-foreground">

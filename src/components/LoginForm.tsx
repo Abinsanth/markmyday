@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Link, useNavigate } from "react-router-dom"
-
+import { usePasswordToggle } from "@/hooks/usePasswordToggle"
 export function LoginForm({
   className,
   ...props
@@ -27,6 +27,7 @@ export function LoginForm({
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
+  const { show: showPassword, icon: passwordIcon } = usePasswordToggle()
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -80,13 +81,23 @@ export function LoginForm({
                     Forgot your password?
                   </a>
                 </div>
-                <Input
+                {/* <Input
                   id="password"
                   type="password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                />
+                /> */}
+                <div className="relative">
+                  <Input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  {passwordIcon}
+                </div>
               </Field>
               {error && <p className="text-sm text-red-500">{error}</p>}
               <Field>

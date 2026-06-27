@@ -15,8 +15,8 @@ import {
 import Attendance from "@/features/attendance/Attendance"
 import ViewList from "@/features/list/ViewList"
 import ManageList from "@/features/list/ManageList"
-
-type View = "attendance" | "view-list" | "manage-list"
+import ManageProfile from "@/features/profile/ManageProfile"
+type View = "attendance" | "view-list" | "manage-list" | "manage-profile"
 
 export default function Dashboard() {
   const [activeView, setActiveView] = useState<View>("attendance")
@@ -27,6 +27,8 @@ export default function Dashboard() {
         return <ViewList />
       case "manage-list":
         return <ManageList />
+      case "manage-profile":
+        return <ManageProfile />
       default:
         return <Attendance />
     }
@@ -36,6 +38,7 @@ export default function Dashboard() {
     attendance: "Attendance Management",
     "view-list": "View List",
     "manage-list": "Manage List",
+    "manage-profile": "Manage Profile",
   }[activeView]
 
   return (

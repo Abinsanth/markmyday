@@ -1,33 +1,35 @@
 import { Button } from "@/components/ui/button"
+import { toast } from "sonner"
 
 type Props = {
   rolls: string[]
   presentRolls: Set<string>
   title?: string
-  date?: string
 }
 
-export default function CopyAttendance({
-  rolls,
-  presentRolls,
-  title,
-  date,
-}: Props) {
+export default function CopyAttendance({ rolls, presentRolls, title }: Props) {
   const present = rolls.filter((r) => presentRolls.has(r))
   const absent = rolls.filter((r) => !presentRolls.has(r))
+  const date = new Date().toLocaleDateString()
 
   const handleCopy = () => {
-    const text = `
-Title: ${title ?? "N/A"}
-Date: ${date ?? "N/A"}
+    const text = `Batch: ${title ?? "N/A"}
+Date: ${date}
 
-Present (${present.length}): 
+Present (${present.length}):
 ${present.join(", ")}
-Absent (${absent.length}):
- ${absent.join(", ")}
-    `.trim()
 
-    navigator.clipboard.writeText(text)
+Absent (${absent.length}):
+${absent.join(", ")}`
+
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        toast.success("Attendance copied to clipboard!")
+      })
+      .catch(() => {
+        toast.error("Failed to copy. Please try again.")
+      })
   }
 
   return (
