@@ -37,7 +37,7 @@ export default function Dashboard() {
           </div>
         </header>
         <div className="p-4">
-          <div className="mx-auto h-screen w-full rounded-xl bg-muted/50">
+          <div className="mx-auto h-screen w-full rounded-xl bg-muted/90">
             <Attendance />
           </div>
         </div>
