@@ -1,5 +1,5 @@
 import { Outlet, useNavigate, useLocation, useBlocker } from "react-router-dom"
-import { SidebarLeft } from "@/components/sidebar-left"
+import { SidebarLeft } from "@/components/SidebarLeft"
 import {
   Breadcrumb,
   BreadcrumbItem,

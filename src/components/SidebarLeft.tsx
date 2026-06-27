@@ -1,5 +1,5 @@
 import * as React from "react"
-import { NavMain } from "@/components/nav-main"
+import { NavMain } from "@/components/NavMain"
 import {
   Sidebar,
   SidebarContent,
@@ -13,8 +13,8 @@ import {
   FolderPenIcon,
   UserRoundIcon,
 } from "lucide-react"
-import { NavUser } from "./nav-user"
-import { DatePicker } from "./date-picker"
+import { NavUser } from "./NavUser"
+import { DatePicker } from "./DatePicker"
 
 type Props = React.ComponentProps<typeof Sidebar> & {
   onNavigate: (path: string) => void
