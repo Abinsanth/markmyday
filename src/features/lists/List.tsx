@@ -16,7 +16,8 @@ type Props = {
 export default function List({ listsData, onSelect }: Props) {
   const { lists, loading } = listsData
 
-  if (loading) return <p>Loading lists...</p>
+  if (loading)
+    return <p className="text-sm text-muted-foreground">Loading lists...</p>
 
   return (
     <Combobox
@@ -26,7 +27,7 @@ export default function List({ listsData, onSelect }: Props) {
         if (list) onSelect(list.rolls, list.name)
       }}
     >
-      <ComboboxInput placeholder="Select a list" />
+      <ComboboxInput placeholder="Select a list" className="w-full" />
       <ComboboxContent>
         <ComboboxEmpty>No lists found.</ComboboxEmpty>
         <ComboboxList>

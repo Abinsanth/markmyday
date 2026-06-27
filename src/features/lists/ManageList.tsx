@@ -1,17 +1,16 @@
 import { useState } from "react"
+import { useOutletContext } from "react-router-dom"
+import { ArrowLeftIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useLists, type ListItem } from "@/hooks/useLists"
+import { type ListItem } from "@/hooks/useLists"
 import ListCard from "./ListCard"
 import CreateListForm from "./CreateListForm"
-import { ArrowLeftIcon } from "lucide-react"
+import type { DashboardContext } from "@/dashboard/Dashboard"
 
 type View = "list" | "create" | "edit"
 
-type Props = {
-  listsData: ReturnType<typeof useLists>
-}
-
-export default function ManageList({ listsData }: Props) {
+export default function ManageList() {
+  const { listsData } = useOutletContext<DashboardContext>()
   const { lists, loading, error, createList, updateList, deleteList } =
     listsData
   const [view, setView] = useState<View>("list")
@@ -29,7 +28,10 @@ export default function ManageList({ listsData }: Props) {
   const handleSubmit = async (name: string, rolls: string[]) => {
     if (editingList) {
       const err = await updateList(editingList.id, name, rolls)
-      if (!err) setView("list")
+      if (!err) {
+        setEditingList(undefined)
+        setView("list")
+      }
       return err
     } else {
       const err = await createList(name, rolls)
@@ -43,8 +45,19 @@ export default function ManageList({ listsData }: Props) {
     setView("list")
   }
 
-  if (loading) return <p className="p-4">Loading...</p>
-  if (error) return <p className="p-4 text-red-500">{error}</p>
+  if (loading)
+    return (
+      <div className="flex h-full items-center justify-center">
+        <p className="text-sm text-muted-foreground">Loading...</p>
+      </div>
+    )
+
+  if (error)
+    return (
+      <div className="flex h-full items-center justify-center">
+        <p className="text-sm text-red-500">{error}</p>
+      </div>
+    )
 
   if (view === "create" || view === "edit") {
     return (

@@ -2,11 +2,11 @@ import { Calendar } from "@/components/ui/calendar"
 import { SidebarGroup, SidebarGroupContent } from "@/components/ui/sidebar"
 
 type Props = {
-  onDateChange: (date: Date | undefined) => void
   selected: Date | undefined
+  onDateChange: (date: Date | undefined) => void
 }
 
-export function DatePicker({ onDateChange, selected }: Props) {
+export function DatePicker({ selected, onDateChange }: Props) {
   return (
     <SidebarGroup className="px-0">
       <SidebarGroupContent>
@@ -14,9 +14,9 @@ export function DatePicker({ onDateChange, selected }: Props) {
           mode="single"
           selected={selected}
           onSelect={onDateChange}
-          startMonth={new Date(2020, 0)}
-          endMonth={new Date(2040, 11)}
           captionLayout="dropdown"
+          startMonth={new Date(2020, 0)}
+          endMonth={new Date(2030, 11)}
           className="bg-transparent [--cell-size:2.1rem]"
         />
       </SidebarGroupContent>

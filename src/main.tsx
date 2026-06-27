@@ -1,48 +1,60 @@
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { RouterProvider, createBrowserRouter, Navigate } from "react-router-dom"
 import "./index.css"
-import App from "./App.tsx"
-import { LoginForm } from "./components/LoginForm.tsx"
-import { SignupForm } from "./components/SignupForm.tsx"
-import { AuthProvider } from "./context/AuthContext.tsx"
-import { ProtectedRoute } from "./components/ProtectedRoute.tsx"
+import { LoginForm } from "./components/LoginForm"
+import { SignupForm } from "./components/SignupForm"
+import { AuthProvider } from "./context/AuthContext"
+import { ProtectedRoute } from "./components/ProtectedRoute"
+import { Toaster } from "./components/ui/sonner"
 import AuthLayout from "./layouts/AuthLayout"
-import { Toaster } from "@/components/ui/sonner"
+import Dashboard from "./dashboard/Dashboard"
+import Attendance from "./features/attendance/Attendance"
+import ViewList from "./features/lists/ViewList"
+import ManageList from "./features/lists/ManageList"
+import ManageProfile from "./features/profile/ManageProfile"
+
+const router = createBrowserRouter([
+  {
+    path: "/login",
+    element: (
+      <AuthLayout>
+        <LoginForm />
+      </AuthLayout>
+    ),
+  },
+  {
+    path: "/signup",
+    element: (
+      <AuthLayout>
+        <SignupForm />
+      </AuthLayout>
+    ),
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <ProtectedRoute>
+        <Dashboard />
+      </ProtectedRoute>
+    ),
+    children: [
+      { index: true, element: <Navigate to="attendance" replace /> },
+      { path: "attendance", element: <Attendance /> },
+      { path: "view-lists", element: <ViewList /> },
+      { path: "manage-lists", element: <ManageList /> },
+      { path: "profile", element: <ManageProfile /> },
+    ],
+  },
+  { path: "/", element: <Navigate to="/dashboard" replace /> },
+  { path: "*", element: <Navigate to="/dashboard" replace /> },
+])
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
-      {/* <Toaster position="top-center" /> */}
-      <Toaster position="top-center" richColors expand={true} />
-      <AuthProvider>
-        <Routes>
-          <Route
-            path="/login"
-            element={
-              <AuthLayout>
-                <LoginForm />
-              </AuthLayout>
-            }
-          />
-          <Route
-            path="/signup"
-            element={
-              <AuthLayout>
-                <SignupForm />
-              </AuthLayout>
-            }
-          />
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <App />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-      </AuthProvider>
-    </BrowserRouter>
+    <AuthProvider>
+      <RouterProvider router={router} />
+      <Toaster position="top-center" />
+    </AuthProvider>
   </StrictMode>
 )

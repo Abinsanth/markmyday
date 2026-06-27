@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
-import type { ListItem } from "@/hooks/useLists"
+import { type ListItem } from "@/hooks/useLists"
 import ConfirmDialog from "@/components/ConfirmDialog"
+
 type Props = {
   list: ListItem
   onEdit: (list: ListItem) => void
