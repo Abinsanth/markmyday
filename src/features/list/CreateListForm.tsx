@@ -7,7 +7,7 @@ import {
   FieldLabel,
   FieldDescription,
 } from "@/components/ui/field"
-import type { ListItem } from "@/hooks/useLists"
+import { type ListItem } from "@/hooks/useLists"
 
 type Props = {
   onSubmit: (name: string, rolls: string[]) => Promise<any>
@@ -30,6 +30,7 @@ export default function CreateListForm({
 
   // Manual mode
   const [manualRolls, setManualRolls] = useState("")
+
   const [preview, setPreview] = useState<string[]>([])
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
@@ -45,6 +46,7 @@ export default function CreateListForm({
   }, [editingList])
 
   const generatePreview = () => {
+    setError("")
     if (mode === "range") {
       const f = parseInt(from)
       const t = parseInt(to)
@@ -76,7 +78,6 @@ export default function CreateListForm({
 
       setPreview(sorted)
     }
-    setError("")
   }
 
   const handleSubmit = async () => {
@@ -98,6 +99,7 @@ export default function CreateListForm({
   return (
     <div className="space-y-4 p-4">
       <FieldGroup>
+        {/* List Name */}
         <Field>
           <FieldLabel>List Name</FieldLabel>
           <Input
@@ -110,21 +112,22 @@ export default function CreateListForm({
         {/* Mode Toggle */}
         <div className="flex gap-2">
           <Button
+            type="button"
             variant={mode === "range" ? "default" : "outline"}
             onClick={() => setMode("range")}
-            type="button"
           >
             Range
           </Button>
           <Button
+            type="button"
             variant={mode === "manual" ? "default" : "outline"}
             onClick={() => setMode("manual")}
-            type="button"
           >
             Manual
           </Button>
         </div>
 
+        {/* Range Mode */}
         {mode === "range" ? (
           <>
             <Field>
@@ -158,6 +161,7 @@ export default function CreateListForm({
             </Field>
           </>
         ) : (
+          /* Manual Mode */
           <Field>
             <FieldLabel>Roll Numbers</FieldLabel>
             <Input
@@ -169,12 +173,15 @@ export default function CreateListForm({
           </Field>
         )}
 
+        {/* Error */}
         {error && <p className="text-sm text-red-500">{error}</p>}
 
+        {/* Preview Button */}
         <Button type="button" variant="outline" onClick={generatePreview}>
           Preview
         </Button>
 
+        {/* Preview Result */}
         {preview.length > 0 && (
           <div className="rounded-md bg-muted p-3 text-sm">
             <p className="mb-1 font-semibold">{preview.length} students</p>
@@ -182,14 +189,10 @@ export default function CreateListForm({
           </div>
         )}
 
-        <div className="flex gap-2">
-          <Button onClick={handleSubmit} disabled={loading}>
-            {loading ? "Saving..." : editingList ? "Update List" : "Save List"}
-          </Button>
-          <Button variant="outline" onClick={onCancel}>
-            Cancel
-          </Button>
-        </div>
+        {/* Actions */}
+        <Button onClick={handleSubmit} disabled={loading}>
+          {loading ? "Saving..." : editingList ? "Update List" : "Save List"}
+        </Button>
       </FieldGroup>
     </div>
   )

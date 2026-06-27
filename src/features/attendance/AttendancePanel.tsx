@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
-import ConfirmDialog from "@/components/ConfirmDialog"
 import { CheckCircleIcon, XCircleIcon } from "lucide-react"
+import ConfirmDialog from "@/components/ConfirmDialog"
 
 type Props = {
   rolls: string[]
@@ -15,10 +15,6 @@ export default function AttendancePanel({
   setPresentRolls,
   onFinish,
 }: Props) {
-  const total = rolls.length
-  const presentCount = presentRolls.size
-  const absentCount = total - presentCount
-  const percentage = Math.round((presentCount / total) * 100)
   const toggleAttendance = (roll: string) => {
     setPresentRolls((prev) => {
       const updated = new Set(prev)
@@ -35,13 +31,18 @@ export default function AttendancePanel({
     setPresentRolls(new Set())
   }
 
+  const total = rolls.length
+  const presentCount = presentRolls.size
+  const absentCount = total - presentCount
+  const percentage = Math.round((presentCount / total) * 100)
+
   return (
     <div className="space-y-4 p-4">
       {/* Count indicator */}
       <div className="flex justify-between text-sm text-muted-foreground">
-        <span>{presentRolls.size} present</span>
-        <span>{rolls.length - presentRolls.size} absent</span>
-        <span>{rolls.length} total</span>
+        <span>{presentCount} present</span>
+        <span>{absentCount} absent</span>
+        <span>{total} total</span>
       </div>
 
       {/* Roll buttons */}
@@ -55,8 +56,8 @@ export default function AttendancePanel({
               variant="outline"
               className={`aspect-square h-auto w-full ${
                 isPresent
-                  ? "border-0 !bg-green-500 text-white hover:!bg-green-600"
-                  : "border-0 !bg-red-100 text-red-500 hover:!bg-red-200"
+                  ? "border-0 bg-green-500! text-white hover:bg-green-600!"
+                  : "border-0 bg-red-100! text-red-500 hover:bg-red-200!"
               }`}
             >
               {roll}
@@ -65,8 +66,16 @@ export default function AttendancePanel({
         })}
       </div>
 
-      {/* Actions - pushed apart */}
-      <div className="flex justify-between">
+      {/* Actions */}
+      <div className="flex justify-between p-4">
+        <ConfirmDialog
+          trigger={<Button variant="outline">Clear</Button>}
+          title="Clear Attendance?"
+          description="This will reset all marked attendance. This action cannot be undone."
+          confirmLabel="Clear"
+          onConfirm={clearAttendance}
+        />
+
         <ConfirmDialog
           trigger={<Button disabled={presentRolls.size === 0}>Finish</Button>}
           title="Finish Attendance?"
@@ -81,7 +90,9 @@ export default function AttendancePanel({
                 <span>Absent: {absentCount}</span>
               </div>
               <div
-                className={`font-medium ${percentage < 50 ? "text-red-500" : "text-green-500"}`}
+                className={`font-medium ${
+                  percentage < 50 ? "text-red-500" : "text-green-500"
+                }`}
               >
                 Attendance: {percentage}%
               </div>
@@ -89,13 +100,6 @@ export default function AttendancePanel({
           }
           confirmLabel="Finish"
           onConfirm={onFinish}
-        />
-        <ConfirmDialog
-          trigger={<Button variant="outline">Clear</Button>}
-          title="Clear Attendance?"
-          description="This will reset all marked attendance. This action cannot be undone."
-          confirmLabel="Clear"
-          onConfirm={clearAttendance}
         />
       </div>
     </div>

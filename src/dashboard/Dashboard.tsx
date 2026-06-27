@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { Outlet, useNavigate, useLocation } from "react-router-dom"
 import { SidebarLeft } from "@/components/sidebar-left"
 import {
   Breadcrumb,
@@ -12,44 +12,32 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-import Attendance from "@/features/attendance/Attendance"
-import ViewList from "@/features/list/ViewList"
-import ManageList from "@/features/list/ManageList"
-import ManageProfile from "@/features/profile/ManageProfile"
 import { useLists } from "@/hooks/useLists"
+import { useState } from "react"
 
-type View = "attendance" | "view-list" | "manage-list" | "manage-profile"
+export type DashboardContext = {
+  listsData: ReturnType<typeof useLists>
+  selectedDate: Date | undefined
+}
 
 export default function Dashboard() {
-  const [activeView, setActiveView] = useState<View>("attendance")
+  const navigate = useNavigate()
+  const location = useLocation()
   const listsData = useLists()
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
 
-  const renderContent = () => {
-    switch (activeView) {
-      case "view-list":
-        return <ViewList listsData={listsData} />
-      case "manage-list":
-        return <ManageList listsData={listsData} />
-      case "manage-profile":
-        return <ManageProfile />
-      default:
-        return <Attendance selectedDate={selectedDate} listsData={listsData} />
-    }
+  const breadcrumbTitle: Record<string, string> = {
+    "/dashboard/attendance": "Take Attendance",
+    "/dashboard/view-lists": "View Lists",
+    "/dashboard/manage-lists": "Manage Lists",
+    "/dashboard/profile": "Profile",
   }
-
-  const breadcrumbTitle = {
-    attendance: "Take Attendance",
-    "view-list": "View Lists",
-    "manage-list": "Manage Lists",
-    "manage-profile": "Profile",
-  }[activeView]
 
   return (
     <SidebarProvider>
       <SidebarLeft
-        onNavigate={setActiveView}
-        activeView={activeView}
+        onNavigate={(path) => navigate(path)}
+        activePath={location.pathname}
         selectedDate={selectedDate}
         onDateChange={setSelectedDate}
       />
@@ -65,7 +53,7 @@ export default function Dashboard() {
               <BreadcrumbList>
                 <BreadcrumbItem>
                   <BreadcrumbPage className="line-clamp-1">
-                    {breadcrumbTitle}
+                    {breadcrumbTitle[location.pathname] ?? "Dashboard"}
                   </BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
@@ -74,7 +62,9 @@ export default function Dashboard() {
         </header>
         <div className="p-4">
           <div className="mx-auto h-screen w-full rounded-xl bg-muted/90">
-            {renderContent()}
+            <Outlet
+              context={{ listsData, selectedDate } satisfies DashboardContext}
+            />
           </div>
         </div>
       </SidebarInset>

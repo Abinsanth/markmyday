@@ -1,18 +1,15 @@
 import { useState } from "react"
+import { useOutletContext } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import List from "../list/List"
 import AttendancePanel from "./AttendancePanel"
 import CopyAttendance from "./CopyAttendance"
 import { useAuth } from "@/context/AuthContext"
 import { CalendarIcon } from "lucide-react"
-import { useLists } from "@/hooks/useLists"
+import type { DashboardContext } from "@/dashboard/Dashboard"
 
-type Props = {
-  selectedDate: Date | undefined
-  listsData: ReturnType<typeof useLists>
-}
-
-export default function Attendance({ selectedDate, listsData }: Props) {
+export default function Attendance() {
+  const { listsData, selectedDate } = useOutletContext<DashboardContext>()
   const [rolls, setRolls] = useState<string[]>([])
   const [listName, setListName] = useState("")
   const [started, setStarted] = useState(false)

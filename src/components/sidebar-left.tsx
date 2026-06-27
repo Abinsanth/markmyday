@@ -17,45 +17,43 @@ import { NavUser } from "./nav-user"
 import { DatePicker } from "./date-picker"
 
 type Props = React.ComponentProps<typeof Sidebar> & {
-  onNavigate: (
-    view: "attendance" | "view-list" | "manage-list" | "manage-profile"
-  ) => void
-  activeView: string
+  onNavigate: (path: string) => void
+  activePath: string
   selectedDate: Date | undefined
   onDateChange: (date: Date | undefined) => void
 }
 
 export function SidebarLeft({
   onNavigate,
+  activePath,
   selectedDate,
   onDateChange,
-  activeView,
   ...props
 }: Props) {
   const navMain = [
     {
       title: "Take Attendance",
       icon: <ClipboardListIcon />,
-      isActive: activeView === "attendance",
-      onClick: () => onNavigate("attendance"),
+      isActive: activePath === "/dashboard/attendance",
+      onClick: () => onNavigate("/dashboard/attendance"),
     },
     {
       title: "View Lists",
       icon: <ListIcon />,
-      isActive: activeView === "view-list",
-      onClick: () => onNavigate("view-list"),
+      isActive: activePath === "/dashboard/view-lists",
+      onClick: () => onNavigate("/dashboard/view-lists"),
     },
     {
       title: "Manage Lists",
       icon: <FolderPenIcon />,
-      isActive: activeView === "manage-list",
-      onClick: () => onNavigate("manage-list"),
+      isActive: activePath === "/dashboard/manage-lists",
+      onClick: () => onNavigate("/dashboard/manage-lists"),
     },
     {
       title: "Profile",
       icon: <UserRoundIcon />,
-      isActive: activeView === "manage-profile",
-      onClick: () => onNavigate("manage-profile"),
+      isActive: activePath === "/dashboard/profile",
+      onClick: () => onNavigate("/dashboard/profile"),
     },
   ]
 
