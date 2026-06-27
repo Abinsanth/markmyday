@@ -1,7 +1,4 @@
-"use client"
-
 import * as React from "react"
-
 import { NavMain } from "@/components/nav-main"
 import {
   Sidebar,
@@ -10,39 +7,46 @@ import {
   SidebarRail,
   SidebarSeparator,
 } from "@/components/ui/sidebar"
-import { SearchIcon, Settings2Icon, BlocksIcon } from "lucide-react"
+import { SearchIcon, Settings2Icon, BlocksIcon, HomeIcon } from "lucide-react"
 import { NavUser } from "./nav-user"
 import { DatePicker } from "./date-picker"
 
-// This is sample data.
 const data = {
   user: {
     name: "shadcn",
     email: "m@example.com",
     avatar: "/avatars/shadcn.jpg",
   },
-  navMain: [
+}
+
+type Props = React.ComponentProps<typeof Sidebar> & {
+  onNavigate: (view: "attendance" | "view-list" | "manage-list") => void
+}
+
+export function SidebarLeft({ onNavigate, ...props }: Props) {
+  const navMain = [
+    {
+      title: "Attendance",
+      icon: <HomeIcon />,
+      onClick: () => onNavigate("attendance"),
+    },
     {
       title: "View List",
-      url: "#",
       icon: <SearchIcon />,
+      onClick: () => onNavigate("view-list"),
     },
     {
       title: "Manage List",
-      url: "#",
       icon: <BlocksIcon />,
+      onClick: () => onNavigate("manage-list"),
     },
     {
       title: "Manage Profile",
-      url: "#",
       icon: <Settings2Icon />,
+      onClick: () => onNavigate("manage-list"),
     },
-  ],
-}
+  ]
 
-export function SidebarLeft({
-  ...props
-}: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar className="border-r-0" {...props}>
       <SidebarHeader>
@@ -52,7 +56,7 @@ export function SidebarLeft({
       <SidebarContent>
         <DatePicker />
         <SidebarSeparator className="mx-0" />
-        <NavMain items={data.navMain} />
+        <NavMain items={navMain} />
       </SidebarContent>
       <SidebarRail />
     </Sidebar>
