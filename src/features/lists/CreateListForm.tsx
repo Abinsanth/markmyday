@@ -15,11 +15,7 @@ type Props = {
   editingList?: ListItem
 }
 
-export default function CreateListForm({
-  onSubmit,
-  onCancel,
-  editingList,
-}: Props) {
+export default function CreateListForm({ onSubmit, editingList }: Props) {
   const [name, setName] = useState("")
   const [mode, setMode] = useState<"range" | "manual">("range")
 
